@@ -7,6 +7,7 @@ import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import java.time.Instant
 
 fun Routing.todosRouting() {
 
@@ -58,7 +59,9 @@ fun Routing.todosRouting() {
         val completedNo = todos.count { todo -> todo.completed }
         val total = todos.size
         val incomplete = total - completedNo
-        val data = hashMapOf("completed" to completedNo, "incomplete" to incomplete, "total" to total)
+        val uptime = Instant.now().toEpochMilli()
+        val data =
+            hashMapOf("completed" to completedNo, "incomplete" to incomplete, "total" to total, "uptime" to uptime)
         call.respond(data)
     }
 
